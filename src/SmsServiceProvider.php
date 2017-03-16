@@ -27,16 +27,15 @@ class SmsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-
-        //$this->publish();
-
         $this->app->singleton('sms.factory', function ($app) {
             return new AgentFactory($app);
         });
 
         $this->app->singleton('sms', function ($app) {
-            return new SmsManager($app, $app['sms.factory']);
+            $config = require(__DIR__ . '/config/sms.php');
+            return new SmsManager($app, $app['sms.factory'], $config);
         });
+
 
     }
 

@@ -12,8 +12,8 @@ namespace LaravelSms\Agents;
 class AlidayuAgent extends Agent implements AgentInterface
 {
 
-    public function send($message = null)
+    public function send()
     {
-        return $message;
+        return $this->message;
     }
 }

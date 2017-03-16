@@ -9,19 +9,43 @@
 
 namespace LaravelSms\Tests;
 
-use LaravelSms\Facades\Sms;
 
 class AgentTest extends TestCase
 {
-    public $mobile = '13713577687';
-    public $message = 'test message';
+    private $mobile = '13713577687';
+    private $message = '1234';
+    private $sms;
+
+
+    public function getInstance()
+    {
+        if (is_object($this->sms)) {
+            return $this->sms;
+        } else {
+            return $this->serInstance();
+        }
+    }
+
+    public function serInstance()
+    {
+        $this->createApplication();
+        $this->sms = $this->app->make('sms');
+        return $this->sms;
+    }
 
     public function testAlidayu()
     {
-        $this->createApplication();
-        $sms = $this->app->make('sms');
-        $message = $sms->make()->to($this->mobile)->send($this->message);
+        $sms = $this->getInstance();
+        $message = $sms->make()->to($this->mobile)->message($this->message)->send();
         $this->assertEquals($message, $this->message);
+    }
+
+    public function testTwoFiveThree()
+    {
+        $sms = $this->getInstance();
+        $response = $sms->make('253')->to($this->mobile)->message($this->message)->send();
+        dump($response);
+        $this->assertTrue($response->success());
     }
 
 

@@ -19,13 +19,11 @@ class SmsManager
 
     protected $config = [];
 
-    protected $agent = [];
-
-    public function __construct($app, AgentFactory $factory)
+    public function __construct($app, AgentFactory $factory, $config)
     {
         $this->app = $app;
         $this->factory = $factory;
-        $this->config = $this->getConfig();
+        $this->config = $config;
     }
 
     public function getDefaultAgent()
@@ -37,18 +35,18 @@ class SmsManager
     {
         $agent = $agent ?: $this->getDefaultAgent();
         $config = $this->getAgent($agent);
+
         return $this->factory->make($config, $agent);
     }
 
-
-    public function getAgent($name = null)
+    public function getAgent($agent = null)
     {
-        return $this->config['agents'][$name];
+        return $this->config['agents'][$agent];
     }
 
     protected function getConfig()
     {
-        return require_once(__DIR__ . '/config/sms.php');
+        return $this->config;
     }
 
 }
