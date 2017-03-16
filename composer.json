@@ -1,0 +1,26 @@
+{
+  "name": "crisen/laravel-sms",
+  "description": "send message service for phone",
+  "type": "library",
+  "require": {
+    "laravel/framework": "^5.4"
+  },
+  "require-dev": {
+    "mockery/mockery": "~0.9.4",
+    "phpunit/phpunit": "~5.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "LaravelSms\\": "src",
+      "LaravelSms\\Tests\\": "tests"
+    }
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "crisenchou",
+      "email": "crisen@crisen.com"
+    }
+  ],
+  "minimum-stability": "stable"
+}
