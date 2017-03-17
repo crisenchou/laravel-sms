@@ -9,7 +9,7 @@
 
 namespace LaravelSms;
 
-use LaravelSms\Agents\AgentFactory;
+use LaravelSms\Drivers\DriverFactory;
 
 class SmsManager
 {
@@ -19,7 +19,7 @@ class SmsManager
 
     protected $config = [];
 
-    public function __construct($app, AgentFactory $factory, $config)
+    public function __construct($app, DriverFactory $factory, $config)
     {
         $this->app = $app;
         $this->factory = $factory;

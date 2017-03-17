@@ -7,9 +7,9 @@
  */
 
 
-namespace LaravelSms\Agents;
+namespace LaravelSms\Drivers;
 
-class AlidayuAgent extends Agent implements AgentInterface
+class Alidayu extends Driver implements DriverInterface
 {
 
     public function send()

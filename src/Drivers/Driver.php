@@ -7,10 +7,10 @@
  */
 
 
-namespace LaravelSms\Agents;
+namespace LaravelSms\Drivers;
 
 
-abstract class Agent
+abstract class Driver
 {
     protected $mobile;
     protected $message;

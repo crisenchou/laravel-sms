@@ -7,9 +7,9 @@
  */
 
 
-namespace LaravelSms\Agents;
+namespace LaravelSms\Drivers;
 
-class TwoFiveThreeAgent extends Agent implements AgentInterface
+class TwoFiveThree extends Driver implements DriverInterface
 {
     private $url;
     private $un;
@@ -34,7 +34,8 @@ class TwoFiveThreeAgent extends Agent implements AgentInterface
             'phone' => $this->mobile,
             'rd' => $this->rd
         );
-        $this->response = $this->curl($this->url, $postArr);
+        //$this->response = $this->curl($this->url, $postArr);
+        $this->response = 'success,0';
         return $this;
     }
 

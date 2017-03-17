@@ -7,10 +7,10 @@
  */
 
 
-namespace LaravelSms\Agents;
+namespace LaravelSms\Drivers;
 
 
-class RonglianAgent extends Agent implements AgentInterface
+class Ronglian extends Driver implements DriverInterface
 {
     public function send()
     {

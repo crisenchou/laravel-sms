@@ -9,7 +9,7 @@ namespace LaravelSms;
  * description:
  */
 use Illuminate\Support\ServiceProvider;
-use LaravelSms\Agents\AgentFactory;
+use LaravelSms\Drivers\DriverFactory;
 
 class SmsServiceProvider extends ServiceProvider
 {
@@ -27,10 +27,9 @@ class SmsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->publish();
-
+        //$this->publish();
         $this->app->singleton('sms.factory', function ($app) {
-            return new AgentFactory($app);
+            return new DriverFactory($app);
         });
 
         $this->app->singleton('sms', function ($app) {

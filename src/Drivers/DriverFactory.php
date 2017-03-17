@@ -7,11 +7,11 @@
  */
 
 
-namespace LaravelSms\Agents;
+namespace LaravelSms\Drivers;
 
 use Exception;
 
-class AgentFactory
+class DriverFactory
 {
 
     protected $app;
@@ -36,11 +36,11 @@ class AgentFactory
     {
         switch ($agent) {
             case 'alidayu':
-                return new AlidayuAgent($config);
+                return new Alidayu($config);
             case 'ronglian':
-                return new RonglianAgent($config);
+                return new Ronglian($config);
             case '253':
-                return new TwoFiveThreeAgent($config);
+                return new TwoFiveThree($config);
         }
 
         throw new Exception("Unsupported driver [$agent]");

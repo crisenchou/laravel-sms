@@ -7,9 +7,9 @@
  * description:
  */
 
-namespace LaravelSms\Agents;
+namespace LaravelSms\Drivers;
 
-interface AgentInterface
+interface DriverInterface
 {
     public function to($phone);
 

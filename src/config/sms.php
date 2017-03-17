@@ -8,7 +8,7 @@
 
 return [
     'default' => 'alidayu',
-    
+
     'agents' => [
         'alidayu' => [
             'url' => '',
@@ -22,8 +22,8 @@ return [
         ],
         '253' => [
             'url' => 'http://sms.253.com/msg/send',
-            'un' => 'N3149748',//用户账号
-            'pw' => 'r3WRniHXAQ4af5', //用户密码
+            'un' => 'your username',//用户账号
+            'pw' => 'your password', //用户密码
             'rd' => '0',//是否需要状态报告
             'ex' => ''
         ],
