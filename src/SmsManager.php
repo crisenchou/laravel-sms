@@ -41,7 +41,7 @@ class SmsManager
 
     public function getAgent($agent = null)
     {
-        return $this->config['agents'][$agent];
+        return $this->config['drivers'][$agent];
     }
 
     protected function getConfig()

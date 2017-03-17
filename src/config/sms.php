@@ -9,7 +9,7 @@
 return [
     'default' => 'alidayu',
 
-    'agents' => [
+    'drivers' => [
         'alidayu' => [
             'url' => '',
             'appkey' => 'your secretkey',

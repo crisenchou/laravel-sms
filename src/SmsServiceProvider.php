@@ -20,6 +20,12 @@ class SmsServiceProvider extends ServiceProvider
      */
     protected $defer = false;
 
+
+    public function boot()
+    {
+        $this->publish();
+    }
+
     /**
      * Register the service provider.
      *
@@ -27,20 +33,29 @@ class SmsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //$this->publish();
+
         $this->app->singleton('sms.factory', function ($app) {
             return new DriverFactory($app);
         });
 
         $this->app->singleton('sms', function ($app) {
-            $config = require(__DIR__ . '/config/sms.php');
+
+            $config = $this->mergeConfigFrom(__DIR__ . '/config/sms.php', 'sms');
             return new SmsManager($app, $app['sms.factory'], $config);
         });
     }
 
+    protected function mergeConfigFrom($path, $key)
+    {
+        $config = $this->app['config']->get($key, []);
+        $this->app['config']->set($key, array_merge(require $path, $config));
+        dump($this->app['config']);
+        return $this->app['config'];
+    }
+
     private function publish()
     {
-        $path = $this->app->make('path.config') . ('sms.php');
+        $path = $this->app->make('path.config') . (DIRECTORY_SEPARATOR . 'sms.php');
         $this->publishes([
             __DIR__ . '/config/sms.php' => $path
         ], 'config');
