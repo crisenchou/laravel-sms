@@ -12,12 +12,12 @@ namespace LaravelSms\Drivers;
 
 abstract class Driver
 {
-    protected $mobile;
+    protected $phone;
     protected $message;
 
-    public function to($mobile)
+    public function to($phone)
     {
-        $this->mobile = $mobile;
+        $this->phone = $phone;
         return $this;
     }
 
@@ -25,6 +25,30 @@ abstract class Driver
     {
         $this->message = $message;
         return $this;
+    }
+
+    protected static function curl($url, array $params = [], $isPost = false)
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        if ($isPost) {
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+            curl_setopt($ch, CURLOPT_URL, $url);
+        } else {
+            $params = http_build_query($params);
+            curl_setopt($ch, CURLOPT_URL, $params ? "$url?$params" : $url);
+        }
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        if (strlen($response) && strpos($response, PHP_EOL)) {
+            $response = substr($response, 0, strpos($response, PHP_EOL));
+        }
+        return $response;
     }
 
     abstract public function send();
