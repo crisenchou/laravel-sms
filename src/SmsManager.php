@@ -26,20 +26,19 @@ class SmsManager
         $this->config = $config;
     }
 
-    public function getDefaultAgent()
+    public function getDefaultName()
     {
         return $this->config['default'];
     }
 
-    public function make($agent = null)
+    public function make($driverName = null)
     {
-        $agent = $agent ?: $this->getDefaultAgent();
-        $config = $this->getAgent($agent);
-
-        return $this->factory->make($config, $agent);
+        $driverName = $driverName ?: $this->getDefaultName();
+        $config = $this->getDriver($driverName);
+        return $this->factory->make($config, $driverName);
     }
 
-    public function getAgent($agent = null)
+    public function getDriver($agent = null)
     {
         return $this->config['drivers'][$agent];
     }

@@ -39,9 +39,8 @@ class SmsServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton('sms', function ($app) {
-
-            $config = $this->mergeConfigFrom(__DIR__ . '/config/sms.php', 'sms');
-            return new SmsManager($app, $app['sms.factory'], $config);
+            $this->mergeConfigFrom(__DIR__ . '/config/sms.php', 'sms');
+            return new SmsManager($app, $app['sms.factory'], $app['config']->get('sms'));
         });
     }
 
@@ -49,8 +48,6 @@ class SmsServiceProvider extends ServiceProvider
     {
         $config = $this->app['config']->get($key, []);
         $this->app['config']->set($key, array_merge(require $path, $config));
-        dump($this->app['config']);
-        return $this->app['config'];
     }
 
     private function publish()
