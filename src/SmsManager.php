@@ -7,9 +7,9 @@
  * description:
  */
 
-namespace LaravelSms;
+namespace Crisen\LaravelSms;
 
-use LaravelSms\Drivers\DriverFactory;
+use Crisen\LaravelSms\Drivers\DriverFactory;
 
 class SmsManager
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace LaravelSms;
+namespace Crisen\LaravelSms;
 
 /**
  * author: crisen
@@ -9,7 +9,7 @@ namespace LaravelSms;
  * description:
  */
 use Illuminate\Support\ServiceProvider;
-use LaravelSms\Drivers\DriverFactory;
+use Crisen\LaravelSms\Drivers\DriverFactory;
 
 class SmsServiceProvider extends ServiceProvider
 {

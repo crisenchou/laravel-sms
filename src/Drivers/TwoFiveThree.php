@@ -7,7 +7,7 @@
  */
 
 
-namespace LaravelSms\Drivers;
+namespace Crisen\LaravelSms\Drivers;
 
 class TwoFiveThree extends Driver implements DriverInterface
 {

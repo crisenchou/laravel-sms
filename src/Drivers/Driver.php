@@ -7,7 +7,7 @@
  */
 
 
-namespace LaravelSms\Drivers;
+namespace Crisen\LaravelSms\Drivers;
 
 
 abstract class Driver

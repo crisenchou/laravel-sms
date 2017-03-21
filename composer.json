@@ -11,8 +11,8 @@
   },
   "autoload": {
     "psr-4": {
-      "LaravelSms\\": "src",
-      "LaravelSms\\Tests\\": "tests"
+      "Crisen\\LaravelSms\\": "src",
+      "Crisen\\LaravelSms\\Tests\\": "tests"
     }
   },
   "license": "MIT",

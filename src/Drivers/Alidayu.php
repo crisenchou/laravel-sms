@@ -7,7 +7,7 @@
  */
 
 
-namespace LaravelSms\Drivers;
+namespace Crisen\LaravelSms\Drivers;
 
 class Alidayu extends Driver implements DriverInterface
 {

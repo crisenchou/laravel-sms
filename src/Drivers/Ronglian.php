@@ -7,7 +7,7 @@
  */
 
 
-namespace LaravelSms\Drivers;
+namespace Crisen\LaravelSms\Drivers;
 
 
 class Ronglian extends Driver implements DriverInterface

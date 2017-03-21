@@ -6,7 +6,7 @@
  * description:
  */
 
-namespace LaravelSms\Facades;
+namespace Crisen\LaravelSms\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

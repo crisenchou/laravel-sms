@@ -7,7 +7,7 @@
  * description:
  */
 
-namespace LaravelSms\Drivers;
+namespace Crisen\LaravelSms\Drivers;
 
 interface DriverInterface
 {

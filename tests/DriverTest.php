@@ -7,9 +7,9 @@
  * description:
  */
 
-namespace LaravelSms\Tests;
+namespace Crisen\LaravelSms\Tests;
 
-use LaravelSms\Facades\Sms;
+use Crisen\LaravelSms\Facades\Sms;
 
 
 class DriverTest extends \Tests\TestCase
