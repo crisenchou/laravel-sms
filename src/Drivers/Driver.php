@@ -21,9 +21,9 @@ abstract class Driver
         return $this;
     }
 
-    public function message($message)
+    public function message($message = null)
     {
-        $this->message = $message;
+        $message && $this->message = $message;
         return $this;
     }
 
@@ -44,10 +44,6 @@ abstract class Driver
         }
         $response = curl_exec($ch);
         curl_close($ch);
-
-        if (strlen($response) && strpos($response, PHP_EOL)) {
-            $response = substr($response, 0, strpos($response, PHP_EOL));
-        }
         return $response;
     }
 

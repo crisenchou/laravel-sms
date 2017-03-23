@@ -40,21 +40,14 @@ class SmsServiceProvider extends ServiceProvider
 
         $this->app->singleton('sms', function ($app) {
             $this->mergeConfigFrom(__DIR__ . '/config/sms.php', 'sms');
-            return new SmsManager($app, $app['sms.factory'], $app['config']->get('sms'));
+            return new SmsManager($app, $app['sms.factory'], config('sms'));
         });
-    }
-
-    protected function mergeConfigFrom($path, $key)
-    {
-        $config = $this->app['config']->get($key, []);
-        $this->app['config']->set($key, array_merge(require $path, $config));
     }
 
     private function publish()
     {
-        $path = $this->app->make('path.config') . (DIRECTORY_SEPARATOR . 'sms.php');
         $this->publishes([
-            __DIR__ . '/config/sms.php' => $path
-        ], 'config');
+            __DIR__ . '/config/sms.php' => config_path('sms'),
+        ]);
     }
 }

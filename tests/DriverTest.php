@@ -15,37 +15,28 @@ use Crisen\LaravelSms\Facades\Sms;
 class DriverTest extends \Tests\TestCase
 {
     private $phone = '13713577687';
-    private $message = '1234';
-
 
     public function setPhone($phone = null)
     {
         $this->phone = $phone;
         return $this->phone;
     }
-
-    public function setMessage($message = null)
-    {
-        if (!$message) {
-            $message = mt_rand(1000, 9999);
-        }
-        $this->message = $message;
-        return $message;
-    }
-
+    
     public function testAlidayu()
     {
-        $this->setMessage();
-        $message = Sms::make()->to($this->phone)->message($this->message)->send();
-        $this->assertEquals($message, $this->message);
+        $templateMessage = [
+            'code' => '123456',
+            'time' => 10
+        ];
+        $response = Sms::make()->to($this->phone)->message($templateMessage)->send();
+        $this->assertTrue($response->success());
     }
 
     public function testTwoFiveThree()
     {
-        $this->setMessage();
-        $response = Sms::make('253')->to($this->phone)->message($this->message)->send();
+        $message = mt_rand(1000, 9999);
+        $response = Sms::make('253')->to($this->phone)->message($message)->send();
         $this->assertTrue($response->success());
     }
-
 
 }

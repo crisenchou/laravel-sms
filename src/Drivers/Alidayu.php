@@ -6,13 +6,10 @@
  * description:
  */
 
-
 namespace Crisen\LaravelSms\Drivers;
 
 class Alidayu extends Driver implements DriverInterface
 {
-
-
     private $appKey;
     private $url;
     private $secretKey;
@@ -20,7 +17,7 @@ class Alidayu extends Driver implements DriverInterface
     private $smsFreeSignName;
     private $smsTemplateCode;
     private $response;
-
+    private $template;
 
     public function __construct($config)
     {
@@ -28,6 +25,7 @@ class Alidayu extends Driver implements DriverInterface
         $this->appKey = $config['app_key'];
         $this->secretKey = $config['secret_key'];
         $this->smsFreeSignName = $config['sms_free_sign_name'];
+        $this->template = $config['sms_template'];
     }
 
     /**
@@ -39,10 +37,19 @@ class Alidayu extends Driver implements DriverInterface
         $params = $this->getParams();
         $sign = $this->getSign($params);
         $params['sign'] = $sign;
-        $this->response = $this->curl($this->url, $params, true);
+        $response = $this->curl($this->url, $params, true);
+        $this->response = $this->parseReponse($response);
         return $this;
     }
 
+    /**
+     * @param $parse
+     * @return mixed
+     */
+    private function parseReponse($parse)
+    {
+        return json_decode(json_encode(simplexml_load_string($parse)), true);
+    }
 
     /**
      * 获取发送参数
@@ -61,15 +68,6 @@ class Alidayu extends Driver implements DriverInterface
         return $params;
     }
 
-
-    /**
-     * 按照模版构造json
-     * @param $template
-     */
-    public function template($template)
-    {
-        $this->message = $template;
-    }
 
     /**
      * 获取公共请求参数
@@ -93,7 +91,7 @@ class Alidayu extends Driver implements DriverInterface
      * @param $params
      * @return string
      */
-    protected function getSign($params)
+    private function getSign($params)
     {
         ksort($params);
         $stringToBeSigned = $this->secretKey;
@@ -109,6 +107,28 @@ class Alidayu extends Driver implements DriverInterface
 
 
     /**
+     * @param null $message
+     * @return $this
+     */
+    public function message($message = null)
+    {
+        if (!is_array($message)) {
+            $message = [$message];
+        }
+        $template = $this->getTemplate();
+        $this->message = json_encode(array_combine($template, $message));
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    private function getTemplate()
+    {
+        return strpos(',', $this->template) ? $this->template : explode(',', $this->template);
+    }
+
+    /**
      * 返回结果
      * @return mixed
      */
@@ -119,7 +139,10 @@ class Alidayu extends Driver implements DriverInterface
 
     public function success()
     {
-
+        if (isset($this->response['success'])) {
+            return $this->response['success'];
+        } else {
+            throwException($this->response['sub_msg']);
+        }
     }
-
 }

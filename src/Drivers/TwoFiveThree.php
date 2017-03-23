@@ -34,11 +34,9 @@ class TwoFiveThree extends Driver implements DriverInterface
             'phone' => $this->phone,
             'rd' => $this->rd
         );
-        //$this->response = $this->curl($this->url, $postArr);
-        $this->response = 'success,0';
+        $this->response = $this->curl($this->url, $postArr);
         return $this;
     }
-
 
     public function success()
     {
