@@ -47,7 +47,7 @@ class SmsServiceProvider extends ServiceProvider
     private function publish()
     {
         $this->publishes([
-            __DIR__ . '/config/sms.php' => config_path('sms'),
+            __DIR__ . '/config/sms.php' => config_path('sms.php'),
         ]);
     }
 }

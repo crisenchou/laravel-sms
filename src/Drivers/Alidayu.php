@@ -39,7 +39,9 @@ class Alidayu extends Driver implements DriverInterface
         $params['sign'] = $sign;
         $response = $this->curl($this->url, $params, true);
         $this->response = $this->parseReponse($response);
-        return $this;
+        if ($this->success()) {
+            return $this->getResponse();
+        }
     }
 
     /**
@@ -142,7 +144,7 @@ class Alidayu extends Driver implements DriverInterface
         if (isset($this->response['success'])) {
             return $this->response['success'];
         } else {
-            throwException($this->response['sub_msg']);
+            throw new \Exception($this->response['msg']);
         }
     }
 }
