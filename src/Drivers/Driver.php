@@ -47,5 +47,10 @@ abstract class Driver
         return $response;
     }
 
+    protected function curlPost($url, array $params = [])
+    {
+        return $this->curl($url, $params, true);
+    }
+
     abstract public function send();
 }

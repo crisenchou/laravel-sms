@@ -27,6 +27,12 @@ return [
             'secretkey' => 'your secretkey',
         ],
 
+        'aliyun' => [
+            'accessKeyId' => 'your appkey',
+            'accessKeySecret' => 'your secretkey',
+            'signName' => 'your signname',
+            'regionId' => 'cn-shenzhen',
+        ],
 
         '253' => [
             'url' => 'http://sms.253.com/msg/send',

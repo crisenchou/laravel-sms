@@ -41,6 +41,8 @@ class DriverFactory
                 return new Ronglian($config);
             case '253':
                 return new TwoFiveThree($config);
+            case 'aliyun':
+                return new Aliyun($config);
         }
 
         throw new Exception("Unsupported driver [$agent]");
