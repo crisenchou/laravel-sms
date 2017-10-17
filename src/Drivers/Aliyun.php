@@ -2,11 +2,12 @@
 
 namespace Crisen\LaravelSms\Drivers;
 
+use Mockery\CountValidator\Exception;
+
 class Aliyun extends Driver implements DriverInterface
 {
     protected static $sendUrl = 'https://dysmsapi.aliyuncs.com/';
-
-    protected $tempId = 'SMS_78885339';
+    protected $tempId;
     protected $regionId;
     protected $signName;
     protected $accessKeyId;
@@ -22,24 +23,44 @@ class Aliyun extends Driver implements DriverInterface
         $this->regionId = $config['regionId'];
     }
 
-    public function sendTemplateSms($to, $tempId, array $data)
+    public function send()
     {
+        $this->checkParams();
         $params = [
             'Action' => 'SendSms',
             'SignName' => $this->signName,
-            'TemplateParam' => $this->getTempDataString($data),
-            'PhoneNumbers' => $to,
-            'TemplateCode' => $tempId,
+            'TemplateParam' => $this->message,
+            'PhoneNumbers' => $this->phone,
+            'TemplateCode' => $this->tempId,
         ];
-        $this->request($params);
+
+        return $this->request($params);
     }
 
-    public function send()
+    protected function checkParams()
     {
-        $to = $this->phone;
-        $tempId = $this->tempId;
-        $data = ['code' => $this->message];
-        return $this->sendTemplateSms($to, $tempId, $data);
+        if (!$this->phone) {
+            throw new Exception('手机号不存在');
+        }
+        if (!$this->message) {
+            throw new Exception('没有信息');
+        }
+        if (!$this->tempId) {
+            throw new Exception('没有模版id');
+        }
+    }
+
+
+    public function setSignName($name)
+    {
+        $this->signName = $name;
+    }
+
+
+    public function template($template)
+    {
+        $this->tempId = $template;
+        return $this;
     }
 
     protected function request(array $params)
@@ -50,18 +71,21 @@ class Aliyun extends Driver implements DriverInterface
         if ($this->success()) {
             return true;
         } else {
-            throw new \Exception('发送失败');
+            $message = json_decode($this->result, true);
+            throw new \Exception($message['Message']);
         }
     }
 
     protected function success()
     {
-        if ($result = json_decode($this->result, true)) {
-            if ('OK' == $result['Message'] && 'OK' == $result['Code']) {
-                return $result;
-            }
+        $result = json_decode($this->result, true);
+        if (!is_array($result)) {
+            return false;
         }
-        return false;
+
+        if ('OK' == $result['Message'] && 'OK' == $result['Code']) {
+            return $result;
+        }
     }
 
     protected function createParams(array $params)
@@ -84,12 +108,11 @@ class Aliyun extends Driver implements DriverInterface
     private function computeSignature($parameters)
     {
         ksort($parameters);
-        $canonicalizedQueryString = '';
+        $queryString = '';
         foreach ($parameters as $key => $value) {
-            $canonicalizedQueryString .= '&' . $this->percentEncode($key) . '=' . $this->percentEncode($value);
+            $queryString .= '&' . $this->percentEncode($key) . '=' . $this->percentEncode($value);
         }
-        $stringToSign = 'POST&%2F&' . $this->percentEncode(substr($canonicalizedQueryString, 1));
-
+        $stringToSign = 'POST&%2F&' . $this->percentEncode(substr($queryString, 1));
         return base64_encode(hash_hmac('sha1', $stringToSign, $this->accessKeySecret . '&', true));
     }
 
@@ -102,13 +125,4 @@ class Aliyun extends Driver implements DriverInterface
         return $res;
     }
 
-
-    protected function getTempDataString(array $data)
-    {
-        $data = array_map(function ($value) {
-            return (string)$value;
-        }, $data);
-
-        return json_encode($data);
-    }
 }
