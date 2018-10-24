@@ -28,21 +28,23 @@ composer require "crisen/laravel-sms":"dev-master"
 > 然后使用artisan vendor:publish发布配置文件
 
 
-
-### 支持的驱动
-
-等待更新
-
-### 使用说明
+### 阿里云短信服务
 
 ~~~
 use Sms;
 ...
 
 public function foo(){
-	$code = '1234';
-	$mobile = '135xxxx6548'
-  	Sms::make()->to(mobile)->message($code)->send();
+	$phone = "13800138000";
+	$code = "1234";
+	$template = "SMS_0000001";
+    $res = Sms::make()->to($phone)
+		->message(json_encode(['code' => $code]))
+		->template($template)
+		->send();
+	if($res){
+        //do successful
+	}
 }
 ~~~
 

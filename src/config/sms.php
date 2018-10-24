@@ -7,7 +7,7 @@
  */
 
 return [
-    'default' => 'alidayu',
+    'default' => 'aliyun',
 
     'drivers' => [
         'alidayu' => [
@@ -20,7 +20,6 @@ return [
             'sms_template_code' => 'your template code id', //短信模板ID
         ],
 
-
         'ronglian' => [
             'url' => '',
             'appkey' => 'your secretkey',
@@ -28,6 +27,7 @@ return [
         ],
 
         'aliyun' => [
+            'url' => 'https://dysmsapi.aliyuncs.com/',
             'accessKeyId' => 'your appkey',
             'accessKeySecret' => 'your secretkey',
             'signName' => 'your signname',

@@ -14,14 +14,14 @@ use Crisen\LaravelSms\Facades\Sms;
 
 class DriverTest extends \Tests\TestCase
 {
-    private $phone = '13713577687';
+    private $phone = '13800138000';
 
     public function setPhone($phone = null)
     {
         $this->phone = $phone;
         return $this->phone;
     }
-    
+
     public function testAlidayu()
     {
         $templateMessage = [

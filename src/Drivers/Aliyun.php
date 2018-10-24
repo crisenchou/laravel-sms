@@ -6,7 +6,7 @@ use Mockery\CountValidator\Exception;
 
 class Aliyun extends Driver implements DriverInterface
 {
-    protected static $sendUrl = 'https://dysmsapi.aliyuncs.com/';
+    protected $sendUrl;
     protected $tempId;
     protected $regionId;
     protected $signName;
@@ -17,6 +17,7 @@ class Aliyun extends Driver implements DriverInterface
 
     public function __construct($config)
     {
+        $this->sendUrl = $config['url'];
         $this->accessKeyId = $config['accessKeyId'];
         $this->accessKeySecret = $config['accessKeySecret'];
         $this->signName = $config['signName'];
@@ -66,13 +67,13 @@ class Aliyun extends Driver implements DriverInterface
     protected function request(array $params)
     {
         $params = $this->createParams($params);
-        $result = $this->curlPost(self::$sendUrl, $params);
+        $result = $this->curlPost($this->sendUrl, $params);
         $this->result = $result;
         if ($this->success()) {
             return true;
         } else {
             $message = json_decode($this->result, true);
-            throw new \Exception($message['Message']);
+            throw new Exception($message['Message']);
         }
     }
 
@@ -102,7 +103,6 @@ class Aliyun extends Driver implements DriverInterface
         ], $params);
         $params['Signature'] = $this->computeSignature($params);
         return $params;
-        //return $this->params($params);
     }
 
     private function computeSignature($parameters)
