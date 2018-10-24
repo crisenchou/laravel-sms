@@ -38,7 +38,7 @@ public function foo(){
 	$phone = "13800138000";
 	$code = "1234";
 	$template = "SMS_0000001";
-    $res = Sms::make()->to($phone)
+  	$res = Sms::make()->to($phone)
 		->message(json_encode(['code' => $code]))
 		->template($template)
 		->send();
